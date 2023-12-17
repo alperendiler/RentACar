@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entities
+namespace Business.Constants
 {
-    public interface IDto
+    public class PathConstants
     {
-     
+        public static string ImagesPath = "wwwroot\\Uploads\\Images\\";
+
     }
 }

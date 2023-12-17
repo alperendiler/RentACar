@@ -1,10 +1,16 @@
 ﻿using Business.Abstracts;
 using Business.Constants;
+using Business.ValidationRules.FluentValdation;
+using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
+using DataAccess.Concretes.EntityFramework;
 using Entities.Concretes;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +25,13 @@ namespace Business.Concretes
         {
             _rentalDal = rentalDal;
         }
-
+        [ValidationAspect(typeof(RentalValidation))]
         public IResult Add(Rental rental)
         {
-            if (rental.ReturnDate == null)
+            IResult result = BusinessRules.Run(Check(rental));
+            if (result != null)
             {
-                return new ErrorResult(Messages.ErrorRentalAdd);
+                return result;
             }
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.AddedRental);
@@ -51,5 +58,45 @@ namespace Business.Concretes
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.UpdatedRental);
         }
-    }
+        public IDataResult<List<RentalDetailsDto>> GetRentalDetails()
+        {
+         
+            return new SuccessDataResult<List<RentalDetailsDto>>(_rentalDal.GetRentalDetails());
+        }
+
+        // rules
+
+        public IResult CheckIfReturnCar(Rental rental, DateTime returnDate)
+        {
+            var result = _rentalDal.GetAll(c => c.CarId == rental.CarId && (returnDate < DateTime.Now));
+
+            if (result != null)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
+
+        public IResult Check(Rental rental)
+        {
+           
+
+            // Kiralama tarihi bugünden küçük olamaz ve kiralama tarihi geri dönüş tarihinden küçük olamaz
+            if (rental.RentDate.Date < DateTime.Today || rental.RentDate.Date >= rental.ReturnDate.Date)
+            {
+                return new ErrorResult(Messages.ErrorRentalAdd);
+            }
+
+            // Mevcut kiralamaların dönüş tarihleri kontrol ediliyor
+            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && rental.RentDate.Date < r.ReturnDate.Date);
+
+            if (result.Any())
+            {
+                return new ErrorResult(Messages.ErrorRentalAdd);
+            }
+            return new SuccessResult();
+        }
+
+     
+    }   
 }

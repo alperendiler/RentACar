@@ -17,22 +17,29 @@ namespace Business.Constants
         public static string DeletedCar = "Araba Silindi";
         public static string UpdatedCar = "Araba Güncellendi";
 
+
+        public static string AddedCarImage = "Araba Resmi Eklendi";
+        public static string DeletedCarImage = "Araba Resmi Silindi";
+        public static string UpdatedCarImage = "Araba Resmi Güncellendi";
+
         public static string AddedColor = "Renk Eklendi";
         public static string DeletedColor = "Renk Silindi";
         public static string UpdatedColor = "Renk Güncellendi";
 
-        public static string AddedUser = "Renk Eklendi";
-        public static string DeletedUser = "Renk Silindi";
-        public static string UpdatedUser = "Renk Güncellendi";
+        public static string AddedUser = "Kullanıcı Eklendi";
+        public static string DeletedUser = "Kullanıcı Silindi";
+        public static string UpdatedUser = "Kullanıcı Güncellendi";
 
-        public static string AddedCustomer = "Renk Eklendi";
-        public static string DeletedCustomer = "Renk Silindi";
-        public static string UpdatedCustomer = "Renk Güncellendi";
+        public static string AddedCustomer = "Müşteri Eklendi";
+        public static string DeletedCustomer = "Müşteri Silindi";
+        public static string UpdatedCustomer = "Müşteri Güncellendi";
 
-        public static string AddedRental = "Renk Eklendi";
-        public static string DeletedRental = "Renk Silindi";
-        public static string UpdatedRental= "Renk Güncellendi";
+        public static string AddedRental = "Kiralama Eklendi";
+        public static string DeletedRental = "Kiralama Silindi";
+        public static string UpdatedRental= "Kiralama Güncellendi";
         public static string ErrorRentalAdd = "Araba Geri Teslim Edilmemiş";
+
+        public static string ErrorRentalAdd2 = "2Araba Geri Teslim Edilmemiş";
 
     }
 

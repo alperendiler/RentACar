@@ -27,6 +27,16 @@ namespace WebUI.Controllers
             }
             return BadRequest(result.Data);
         }
+        [HttpGet("getrentaldetails")]
+        public ActionResult Get()
+        {
+            var result = _rentalService.GetRentalDetails();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Data);
+        }
         [HttpGet("getbyid")]
         public ActionResult Get(int id)
         {

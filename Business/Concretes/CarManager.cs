@@ -2,6 +2,7 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValdation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
@@ -18,10 +19,11 @@ namespace Business.Concretes
     public class CarManager : ICarService
     {
         ICarDal _carDal;
-
-        public CarManager(ICarDal carDal)
+        IRentalService _rentalService;
+        public CarManager(ICarDal carDal, IRentalService rentalService)
         {
             _carDal = carDal;
+            _rentalService = rentalService;
         }
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
@@ -50,6 +52,7 @@ namespace Business.Concretes
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
+            //BusinessRules.Run(CheckIfReturnCar(_rentalService.Ge))
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
         public IResult Update(Car car)
@@ -58,5 +61,7 @@ namespace Business.Concretes
             _carDal.Update(car);
             return new SuccessResult(Messages.UpdatedCar);
         }
+
+       
     }
 }
