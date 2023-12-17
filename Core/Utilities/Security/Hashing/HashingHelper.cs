@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 namespace Core.Utilities.Security.Hashing
 {
     public class HashingHelper
-    {                       //createHash
+    {                     
         public static void CreatePasswordHash(string password,out byte[] passwordHash,out byte[] passwordSalt)
-        {                                           //algorithm
+        {                                      
             using (var hmac = new System.Security.Cryptography.HMACSHA512() )
             {
-                passwordSalt = hmac.Key;// System.Security.Cryptography.HMACSHA512()algoritmasının her kullanıcın oluşturduğu key değeri
+                passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
-                              //verifyHash
+                              
         public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {                  
             using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))

@@ -40,6 +40,7 @@ namespace Business.Constants
         public static string ErrorRentalAdd = "Araba Geri Teslim Edilmemiş";
 
         public static string ErrorRentalAdd2 = "2Araba Geri Teslim Edilmemiş";
+        public static string AuthorizationDenied = "Yetkiniz yok.";
 
     }
 
