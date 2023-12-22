@@ -1,5 +1,8 @@
 ﻿using Business.Abstracts;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Core.Aspects.Autofac.Validation;
+using Core.Aspects.Caching;
 using Core.Utilities.Business;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Results;
@@ -24,7 +27,7 @@ namespace Business.Concretes
             _carImageDal = carImageDal;
             _fileHelper = fileHelper;
         }
-
+        [SecuredOperation("admin,editör")]
         public IResult Add(IFormFile file, CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfCarImageLimit(carImage.CarId));
